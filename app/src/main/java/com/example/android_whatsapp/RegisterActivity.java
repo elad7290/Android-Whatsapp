@@ -20,5 +20,8 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        ///does it work?
+        int x = 7;
+
     }
 }

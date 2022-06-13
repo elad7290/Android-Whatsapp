@@ -1,4 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/background_sender"
+        android:layout_alignParentEnd="true"
+        android:padding="5dp"
+        android:layout_margin="2dp">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:maxWidth="300dp"
+            android:text="HI"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/content"
+            android:layout_marginLeft="5dp"
+            android:text="12:04:00 27/2/98"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+</RelativeLayout>
+
+
+
+<!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,4 +58,4 @@
             android:id="@+id/content"/>
 
     </RelativeLayout>
-</RelativeLayout>
+</RelativeLayout>-->

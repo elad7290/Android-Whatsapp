@@ -3,10 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ELAD/AndroidStudioProjects/AndroidWhatsapp/app/src/main/res/drawable/background_receiver.xml" value="0.116" />
+        <entry key="..\:/Users/ELAD/AndroidStudioProjects/AndroidWhatsapp/app/src/main/res/drawable/background_sender.xml" value="0.116" />
         <entry key="..\:/Users/ELAD/AndroidStudioProjects/AndroidWhatsapp/app/src/main/res/drawable/btn_bg.xml" value="0.147" />
         <entry key="..\:/Users/ELAD/AndroidStudioProjects/AndroidWhatsapp/app/src/main/res/drawable/input_bg.xml" value="0.3015" />
         <entry key="..\:/Users/ELAD/AndroidStudioProjects/AndroidWhatsapp/app/src/main/res/layout/activity_login.xml" value="0.325" />
+        <entry key="..\:/Users/ELAD/AndroidStudioProjects/AndroidWhatsapp/app/src/main/res/layout/activity_massage.xml" value="0.2625157761884729" />
         <entry key="..\:/Users/ELAD/AndroidStudioProjects/AndroidWhatsapp/app/src/main/res/layout/activity_register.xml" value="0.32083333333333336" />
+        <entry key="..\:/Users/ELAD/AndroidStudioProjects/AndroidWhatsapp/app/src/main/res/layout/message_layout_receiver.xml" value="0.2667806755023514" />
+        <entry key="..\:/Users/ELAD/AndroidStudioProjects/AndroidWhatsapp/app/src/main/res/layout/message_layout_sender.xml" value="0.24375" />
       </map>
     </option>
   </component>

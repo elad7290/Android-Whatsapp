@@ -9,6 +9,8 @@ import com.example.android_whatsapp.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
+    private String username = null;
+    private String password = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +22,41 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         });
+        // username validation
+        binding.loginInputUsername.setOnFocusChangeListener((view, hasFocus) -> {
+            if (!hasFocus) {
+                validateUsername();
+            }
+        });
+        // password validation
+        binding.loginInputPassword.setOnFocusChangeListener((view, hasFocus) -> {
+            if (!hasFocus) {
+                validatePassword();
+            }
+        });
+    }
+
+    private boolean validateUsername() {
+        String val = binding.loginInputUsername.getText().toString();
+        if (val.isEmpty()) {
+            binding.loginInputUsername.setError("This field cannot be empty");
+            return false;
+        } else {
+            this.username = val;
+            binding.loginInputUsername.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePassword() {
+        String val = binding.loginInputPassword.getText().toString();
+        if (val.isEmpty()) {
+            binding.loginInputPassword.setError("This field cannot be empty");
+            return false;
+        } else {
+            this.password = val;
+            binding.loginInputPassword.setError(null);
+            return true;
+        }
     }
 }

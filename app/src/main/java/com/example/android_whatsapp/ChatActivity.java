@@ -37,6 +37,7 @@ public class ChatActivity extends AppCompatActivity {
         messagesList.setLayoutManager(new LinearLayoutManager(this));
 
 
+
         List<Message> messages = new ArrayList<>();
         messages.add(new Message("hi", Calendar.getInstance().getTime().toString(), false));
         messages.add(new Message("hi2", "...", true));

@@ -1,6 +1,7 @@
 package com.example.android_whatsapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android_whatsapp.ChatActivity;
 import com.example.android_whatsapp.R;
+import com.example.android_whatsapp.RegisterActivity;
 import com.example.android_whatsapp.entities.Chat;
 import com.example.android_whatsapp.entities.Message;
 
@@ -28,6 +31,9 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
             lastMessage=itemView.findViewById(R.id.lastMessage);
             time=itemView.findViewById(R.id.time);
         }
+        public int clickAtPosition(){
+            return getAdapterPosition();
+        }
     }
 
     private final LayoutInflater inflater;
@@ -40,7 +46,20 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
     @Override
     public ChatViewHolder onCreateViewHolder(ViewGroup parent,int viewType){
         View itemView= inflater.inflate(R.layout.chat_layout,parent,false);
-        return new ChatViewHolder(itemView);
+        ChatViewHolder holder = new ChatViewHolder(itemView);
+
+        // on item click listener
+        itemView.setOnClickListener(view -> {
+            if (chats != null) {
+                int position = holder.clickAtPosition();
+                final Chat current = chats.get(position);
+                Context context = inflater.getContext();
+                Intent intent = new Intent(context, ChatActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+        return holder;
     }
     @Override
     public void onBindViewHolder(ChatViewHolder holder, int position) {
@@ -50,6 +69,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
             holder.lastMessage.setText(current.getLast());
             holder.time.setText(current.getLastDate());
         }
+
     }
 
     public void setChats(List<Chat> c) {

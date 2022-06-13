@@ -27,6 +27,9 @@ public class SidebarActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
+
+
+
         RecyclerView chatsList = binding.chatsList;
         final ChatsListAdapter adapter = new ChatsListAdapter(this);
         chatsList.setAdapter(adapter);

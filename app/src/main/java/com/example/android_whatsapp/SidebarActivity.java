@@ -36,22 +36,22 @@ public class SidebarActivity extends AppCompatActivity {
         chatsList.setLayoutManager(new LinearLayoutManager(this));
 
         List<Chat> chats = new ArrayList<>();
-        chats.add(new Chat("elad", "....", "messaskdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad2", "....", "messaskdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad3", "....", "messa2skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad4", "....", "messa234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
-        chats.add(new Chat("elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("1", "elad", "....", "messaskdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("2", "elad2", "....", "messaskdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("3", "elad3", "....", "messa2skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("4", "elad4", "....", "messa234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("5", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("6", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("7", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("8", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("9", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("10", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("11", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("12", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("13", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("14", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("15", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
+        chats.add(new Chat("16", "elad5", "....", "messax234skdh", Calendar.getInstance().getTime().toString()));
 
         adapter.setChats(chats);
     }

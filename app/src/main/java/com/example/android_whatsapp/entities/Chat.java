@@ -5,14 +5,15 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Chat {
-    @PrimaryKey(autoGenerate = true)
-    private String id;
-    private String name;
+
+    private String id;    // username
+    private String name;  // nickname
     private String server;
     private String last;
     private String lastDate;
 
-    public Chat(String name, String server, String last, String lastDate) {
+    public Chat(String id ,String name, String server, String last, String lastDate) {
+        this.id = id;
         this.name = name;
         this.server = server;
         this.last = last;

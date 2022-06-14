@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.android_whatsapp.adapters.MessagesListAdapter;
@@ -17,6 +18,7 @@ import java.util.List;
 
 
 public class ChatActivity extends AppCompatActivity {
+
     private ActivityChatBinding binding;
 
     @Override
@@ -28,13 +30,21 @@ public class ChatActivity extends AppCompatActivity {
         binding.btnSend.setOnClickListener(view -> {
             String msg = binding.etSend.getText().toString();
             if (!msg.isEmpty()) {
-                sendMessage();// fixe this....
+                // TODO: send properly
+                sendMessage();
             }
         });
+
         RecyclerView messagesList = binding.messagesList;
         final MessagesListAdapter adapter = new MessagesListAdapter(this);
         messagesList.setAdapter(adapter);
         messagesList.setLayoutManager(new LinearLayoutManager(this));
+
+        Intent intent = getIntent();
+        String nickname = intent.getStringExtra("nickname");
+        if (nickname != null) {
+            binding.nickname.setText(nickname);
+        }
 
 
 

@@ -21,13 +21,14 @@ import java.util.List;
 public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.ChatViewHolder> {
 
     class ChatViewHolder extends RecyclerView.ViewHolder{
-        private final TextView username;
+
+        private final TextView nickname;
         private final TextView lastMessage;
         private final TextView time;
 
         private ChatViewHolder(View itemView){
             super(itemView);
-            username=itemView.findViewById(R.id.username);
+            nickname=itemView.findViewById(R.id.nickname);
             lastMessage=itemView.findViewById(R.id.lastMessage);
             time=itemView.findViewById(R.id.time);
         }
@@ -55,6 +56,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
                 final Chat current = chats.get(position);
                 Context context = inflater.getContext();
                 Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("nickname", current.getName());
                 context.startActivity(intent);
             }
         });
@@ -65,7 +67,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
     public void onBindViewHolder(ChatViewHolder holder, int position) {
         if (chats != null) {
             final Chat current = chats.get(position);
-            holder.username.setText(current.getName());
+            holder.nickname.setText(current.getName());
             holder.lastMessage.setText(current.getLast());
             holder.time.setText(current.getLastDate());
         }

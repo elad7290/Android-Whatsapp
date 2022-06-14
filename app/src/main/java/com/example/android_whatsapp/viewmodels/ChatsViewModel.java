@@ -2,10 +2,8 @@ package com.example.android_whatsapp.viewmodels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.android_whatsapp.entities.Chat;
 import com.example.android_whatsapp.repositories.ChatsRepository;
-
 import java.util.List;
 
 

@@ -1,25 +1,24 @@
 package com.example.android_whatsapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.example.android_whatsapp.adapters.MessagesListAdapter;
 import com.example.android_whatsapp.databinding.ActivityChatBinding;
 import com.example.android_whatsapp.entities.Message;
-
-import java.text.DateFormat;
-import java.util.ArrayList;
+import com.example.android_whatsapp.viewmodels.MessagesViewModel;
 import java.util.Calendar;
-import java.util.List;
+
 
 
 public class ChatActivity extends AppCompatActivity {
 
     private ActivityChatBinding binding;
+    private MessagesViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +26,10 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        viewModel = new ViewModelProvider(this).get(MessagesViewModel.class);
+
         binding.btnSend.setOnClickListener(view -> {
-            String msg = binding.etSend.getText().toString();
-            if (!msg.isEmpty()) {
-                // TODO: send properly
-                sendMessage();
-            }
+            sendMessage();
         });
 
         RecyclerView messagesList = binding.messagesList;
@@ -46,29 +43,21 @@ public class ChatActivity extends AppCompatActivity {
             binding.nickname.setText(nickname);
         }
 
+        viewModel.get().observe(this, messages -> {
+            adapter.setMessages(messages);
+        });
 
-
-        List<Message> messages = new ArrayList<>();
-        messages.add(new Message("hi", Calendar.getInstance().getTime().toString(), false));
-        messages.add(new Message("hi2", "...", true));
-        messages.add(new Message("hi3", "...", false));
-        messages.add(new Message("hi4", "...", true));
-        messages.add(new Message("hi5jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj", "...", false));
-        messages.add(new Message("hi", "...", false));
-        messages.add(new Message("hiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG2", "...", true));
-        messages.add(new Message("hi3", "...", false));
-        messages.add(new Message("hi4", "...", true));
-        messages.add(new Message("hi5", "...", false));
-        messages.add(new Message("hi", "...", false));
-        messages.add(new Message("hi2", "...", true));
-        messages.add(new Message("hi3", "...", false));
-        messages.add(new Message("hi4", "...", true));
-        messages.add(new Message("hi5", "...", false));
-        adapter.setMessages(messages);
     }
 
     private void sendMessage() {
-        //TODO: ADD MESSAGE TO DATABASE
-
+        String content = binding.content.getText().toString();
+        if (content.isEmpty()){
+            return;
+        }
+        String created = Calendar.getInstance().getTime().toString();
+        boolean sent = true;
+        Message message = new Message(content, created, sent);
+        viewModel.add(message);
+        binding.content.setText(null);
     }
 }

@@ -15,7 +15,7 @@ public interface ChatDao {
     List<Chat> index();
 
     @Query("SELECT * FROM chat WHERE id=:id")
-    Chat chat(String id);
+    Chat get(String id);
 
     @Insert
     void insert(Chat... chats);

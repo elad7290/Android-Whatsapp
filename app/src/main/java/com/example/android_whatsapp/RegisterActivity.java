@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.example.android_whatsapp.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity {
+
     private ActivityRegisterBinding binding;
     private String username = null;
     private String nickname = null;

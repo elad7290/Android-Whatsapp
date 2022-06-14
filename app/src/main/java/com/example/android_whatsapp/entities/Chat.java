@@ -1,18 +1,28 @@
 package com.example.android_whatsapp.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Chat {
-
+    @PrimaryKey
+    @NonNull
     private String id;    // username
     private String name;  // nickname
     private String server;
     private String last;
     private String lastDate;
 
-    public Chat(String id ,String name, String server, String last, String lastDate) {
+    /*public Chat(String id, String name, String server) {
+        this.id = id;
+        this.name = name;
+        this.server = server;
+        this.last = null;
+        this.lastDate = null;
+    }*/
+
+    public Chat(@NonNull String id, String name, String server, String last, String lastDate) {
         this.id = id;
         this.name = name;
         this.server = server;

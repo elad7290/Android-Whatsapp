@@ -23,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
         binding.linkLogin.setOnClickListener(view -> {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         });
         // username validation
         binding.RegisterInputUsername.setOnFocusChangeListener((view, hasFocus) -> {

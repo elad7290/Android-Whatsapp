@@ -21,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.linkRegister.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
+            finish();
         });
         // username validation
         binding.loginInputUsername.setOnFocusChangeListener((view, hasFocus) -> {
@@ -33,6 +34,13 @@ public class LoginActivity extends AppCompatActivity {
             if (!hasFocus) {
                 validatePassword();
             }
+        });
+
+        binding.btnLogin.setOnClickListener(view -> {
+            // TODO: check user exist
+
+            Intent intent = new Intent(this, SidebarActivity.class);
+            startActivity(intent);
         });
     }
 

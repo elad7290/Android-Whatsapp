@@ -23,7 +23,7 @@ public interface ChatDao {
     void insert(List<Chat> chats);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Chat chat);
+    void insert(Chat chats);
 
     @Update
     void update(Chat chat);

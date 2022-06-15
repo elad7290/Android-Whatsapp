@@ -23,8 +23,12 @@ public interface MessageDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Message message);
 
-    @Query("DELETE FROM message")
-    void clear();
+    @Query("DELETE FROM message WHERE username=:username")
+    void clear(String username);
+
+    @Query("SELECT * FROM message WHERE username=:username")
+    List<Message> getMessagesFrom(String username);
+
 
    /* @Query("SELECT * FROM message WHERE id=:id")
     Message get(String id);

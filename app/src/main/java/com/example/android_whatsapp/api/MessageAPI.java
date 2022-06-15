@@ -47,9 +47,16 @@ public class MessageAPI {
             @Override
             public void onResponse(@NonNull Call<List<Message>> call, @NonNull Response<List<Message>> response) {
                 new Thread(()->{
-                    dao.clear();
-                    dao.insert(response.body());
-                    messageListData.postValue(dao.index());
+                    dao.clear(username);
+                    List <Message> messages = response.body();
+                    for (Message m: messages) {
+                        m.setUsername(username);
+                    }
+                    dao.insert(messages);
+                    List<Message> m = dao.index();
+                    // id is not the same id as server
+                    /*dao.insert(response.body());*/
+                    messageListData.postValue(dao.getMessagesFrom(username));
                 }).start();
             }
 
@@ -70,13 +77,16 @@ public class MessageAPI {
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 new Thread(()->{
                     dao.insert(message);
-                    messageListData.postValue(dao.index());
+                    messageListData.postValue(dao.getMessagesFrom(username));
                 }).start();
             }
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                int u=0;
+                /*int u=0;
+                List<Message> m = dao.index();
+                dao.insert(message);
+                List<Message> m2 = dao.index();*/
             }
         });
     }

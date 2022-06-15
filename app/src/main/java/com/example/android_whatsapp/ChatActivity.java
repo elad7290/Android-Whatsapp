@@ -38,7 +38,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         binding.btnSend.setOnClickListener(view -> {
-            sendMessage();
+            sendMessage(username);
         });
 
         RecyclerView messagesList = binding.messagesList;
@@ -54,14 +54,14 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    private void sendMessage() {
+    private void sendMessage(String username) {
         String content = binding.content.getText().toString();
         if (content.isEmpty()){
             return;
         }
         String created = Calendar.getInstance().getTime().toString();
         boolean sent = true;
-        Message message = new Message(content, created, sent);
+        Message message = new Message(content, created, sent, username);
         viewModel.add(message);
         binding.content.setText(null);
     }

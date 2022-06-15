@@ -8,17 +8,19 @@ import java.util.List;
 
 public class MessagesViewModel extends ViewModel {
 
-    private final MessagesRepository repository;
-    private final LiveData<List<Message>> messages;
+    private MessagesRepository repository;
+    private LiveData<List<Message>> messages;
     private String username;
 
     public MessagesViewModel() {
-        this.repository = new MessagesRepository();
-        messages = repository.getAll();
+
     }
 
     public void setUsername(String username){
         this.username = username;
+        this.repository = new MessagesRepository();
+        repository.setUsername(username);
+        messages = repository.getAll();
         reload();
     }
 
@@ -27,12 +29,12 @@ public class MessagesViewModel extends ViewModel {
     }
 
     public void add(Message message) {
-        repository.add(username, message);
+        repository.add(message);
 
     }
 
     public void reload() {
-        repository.reload(username);
+        repository.reload();
     }
 
 }

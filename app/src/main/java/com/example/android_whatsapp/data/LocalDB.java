@@ -17,6 +17,7 @@ public class LocalDB {
         db = Room
                 .databaseBuilder(AppContext.context, AndroidWhatsappDB.class, "ChatsDB")
                 .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
                 .build();
     }
 

@@ -12,10 +12,13 @@ public class Message {
     private String created;
     private boolean sent;
 
-    public Message(String content, String created, boolean sent) {
+    private String username;
+
+    public Message(String content, String created, boolean sent, String username) {
         this.content = content;
         this.created = created;
         this.sent = sent;
+        this.username = username;
     }
 
     public int getId() {
@@ -48,5 +51,13 @@ public class Message {
 
     public void setSent(boolean sent) {
         this.sent = sent;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

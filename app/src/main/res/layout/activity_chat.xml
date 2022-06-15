@@ -20,9 +20,10 @@
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark">
+                android:background="@drawable/test_bg">
 
                 <ImageView
+                    android:contentDescription="@string/profile_image"
                     android:id="@+id/image"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -31,14 +32,13 @@
                     />
 
                 <TextView
-                    android:text="delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxWidth="200dp"
                     android:maxLines="1"
                     android:id="@+id/nickname"
                     android:textSize="18sp"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"/>
 
@@ -47,16 +47,18 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:id="@+id/chat_middle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/chat_header"
-            android:layout_above="@id/chat_bottom">
+            android:layout_above="@id/chat_bottom">-->
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_below="@id/chat_header"
+                android:layout_above="@id/chat_bottom">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/messages_list"
@@ -65,7 +67,7 @@
 
             </ScrollView>
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
 
 
         <RelativeLayout
@@ -77,6 +79,8 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <EditText
+                android:autofillHints=""
+                android:inputType="text"
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,18 +89,18 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp"
-                android:layout_toLeftOf="@id/btnSend"
+                android:layout_toStartOf="@id/btnSend"
                 android:background="@drawable/typemessage_design"
                 android:hint="@string/type_a_message"
                 android:minHeight="40dp"
                 android:padding="8dp" />
 
             <ImageButton
+                android:contentDescription="@string/send_message_btn"
                 android:id="@+id/btnSend"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_margin="5dp"
                 android:background="@drawable/ic_send" />
 

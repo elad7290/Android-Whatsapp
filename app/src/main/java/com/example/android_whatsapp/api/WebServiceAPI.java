@@ -2,6 +2,7 @@ package com.example.android_whatsapp.api;
 
 
 import com.example.android_whatsapp.entities.Chat;
+import com.example.android_whatsapp.entities.Message;
 
 import java.util.List;
 
@@ -22,5 +23,11 @@ public interface WebServiceAPI {
 
     @DELETE("contacts/{id}")
     Call<Void> deleteChat(@Path("id") int id);
+
+    @GET("contacts/{id}/messages")
+    Call<List<Message>> getMessages(@Path("id") String id);
+
+    @POST("contacts/{id}/messages")
+    Call<Void> createMessage(@Path("id") String id, @Body Message message);
 
 }

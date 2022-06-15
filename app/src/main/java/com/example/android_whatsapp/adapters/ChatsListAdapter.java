@@ -57,6 +57,7 @@ public class ChatsListAdapter extends RecyclerView.Adapter<ChatsListAdapter.Chat
                 Context context = inflater.getContext();
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("nickname", current.getName());
+                intent.putExtra("username", current.getId());
                 context.startActivity(intent);
             }
         });

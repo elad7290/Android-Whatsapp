@@ -10,10 +10,16 @@ public class MessagesViewModel extends ViewModel {
 
     private final MessagesRepository repository;
     private final LiveData<List<Message>> messages;
+    private String username;
 
     public MessagesViewModel() {
         this.repository = new MessagesRepository();
         messages = repository.getAll();
+    }
+
+    public void setUsername(String username){
+        this.username = username;
+        reload();
     }
 
     public LiveData<List<Message>> get() {
@@ -21,15 +27,12 @@ public class MessagesViewModel extends ViewModel {
     }
 
     public void add(Message message) {
-        repository.add(message);
-    }
+        repository.add(username, message);
 
-    public void delete(Message message) {
-        repository.delete(message);
     }
 
     public void reload() {
-        repository.reload();
+        repository.reload(username);
     }
 
 }

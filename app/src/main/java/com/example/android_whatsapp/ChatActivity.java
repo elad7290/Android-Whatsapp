@@ -26,7 +26,16 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent intent = getIntent();
+        String nickname = intent.getStringExtra("nickname");
+        String username = intent.getStringExtra("username");
+        if (nickname != null) {
+            binding.nickname.setText(nickname);
+        }
+
         viewModel = new ViewModelProvider(this).get(MessagesViewModel.class);
+        viewModel.setUsername(username);
+
 
         binding.btnSend.setOnClickListener(view -> {
             sendMessage();
@@ -37,11 +46,7 @@ public class ChatActivity extends AppCompatActivity {
         messagesList.setAdapter(adapter);
         messagesList.setLayoutManager(new LinearLayoutManager(this));
 
-        Intent intent = getIntent();
-        String nickname = intent.getStringExtra("nickname");
-        if (nickname != null) {
-            binding.nickname.setText(nickname);
-        }
+
 
         viewModel.get().observe(this, messages -> {
             adapter.setMessages(messages);

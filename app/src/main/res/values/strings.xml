@@ -14,5 +14,8 @@
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="send_message_btn">send message btn</string>
+<!--
+    <string name="BaseUrl">http://172.19.3.62:7097/api/</string>
+-->
     <string name="BaseUrl">http://10.0.2.2:7097/api/</string>
 </resources>

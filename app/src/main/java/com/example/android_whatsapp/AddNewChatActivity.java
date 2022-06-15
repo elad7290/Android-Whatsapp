@@ -33,7 +33,7 @@ public class AddNewChatActivity extends AppCompatActivity {
         nickname=binding.nickname;
         sever=binding.server;
 
-        binding.btmAdd.setOnClickListener(view -> {
+        binding.btnAdd.setOnClickListener(view -> {
             String u= username.getText().toString();
             String n= nickname.getText().toString();
             String s= sever.getText().toString();

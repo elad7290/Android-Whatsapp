@@ -12,6 +12,7 @@ import android.view.View;
 
 
 import com.example.android_whatsapp.adapters.ChatsListAdapter;
+import com.example.android_whatsapp.api.ChatAPI;
 import com.example.android_whatsapp.data.AndroidWhatsappDB;
 import com.example.android_whatsapp.data.ChatDao;
 import com.example.android_whatsapp.databinding.ActivitySidebarBinding;
@@ -35,6 +36,7 @@ public class SidebarActivity extends AppCompatActivity {
         binding = ActivitySidebarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         viewModel=new ViewModelProvider(this).get(ChatsViewModel.class);
 
         // create chats list
@@ -43,17 +45,12 @@ public class SidebarActivity extends AppCompatActivity {
         chatsList.setAdapter(adapter);
         chatsList.setLayoutManager(new LinearLayoutManager(this));
 
-        binding.btmAdd.setOnClickListener(view -> {
+        binding.btnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddNewChatActivity.class);
             startActivity(intent);
         });
 
-        viewModel.get().observe(this,chats -> {
-            adapter.setChats(chats);
-        });
-
-
-
+        viewModel.get().observe(this,chats -> adapter.setChats(chats));
 
     }
 

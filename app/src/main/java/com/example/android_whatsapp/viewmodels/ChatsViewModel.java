@@ -29,8 +29,8 @@ public class ChatsViewModel extends ViewModel {
         repository.delete(chat);
     }
 
-    public void reload() {
+    /*public void reload() {
         repository.reload();
-    }
+    }*/
 
 }

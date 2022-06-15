@@ -11,10 +11,13 @@ public class LocalDB {
     private AndroidWhatsappDB db = null;
 
     private LocalDB() {
+
+        // TODO: delete .allowMainThreadQueries()
+
         db = Room
                 .databaseBuilder(AppContext.context, AndroidWhatsappDB.class, "ChatsDB")
                 .fallbackToDestructiveMigration()
-                .allowMainThreadQueries().build();
+                .build();
     }
 
     public static LocalDB getInstance() {

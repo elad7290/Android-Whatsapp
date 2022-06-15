@@ -2,6 +2,8 @@ package com.example.android_whatsapp.repositories;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.android_whatsapp.api.ChatAPI;
 import com.example.android_whatsapp.data.ChatDao;
 import com.example.android_whatsapp.data.LocalDB;
 import com.example.android_whatsapp.entities.Chat;
@@ -12,32 +14,31 @@ public class ChatsRepository {
 
     private ChatDao dao;
     private ChatListData chatListData;
-    //private ChatApi api;
+    private ChatAPI api;
 
     public ChatsRepository(){
         LocalDB db = LocalDB.getInstance();
         dao = db.chatDao();
         chatListData=new ChatListData();
-        // api = new ChatAPI(chatListData, dao);
+        api = new ChatAPI(chatListData, dao);
     }
 
     class ChatListData extends MutableLiveData<List<Chat>>{
 
         public ChatListData(){
             super();
-            List<Chat>c=new LinkedList<>();
-            c.add(new Chat("1","chen","...",null,null));
-            setValue(c);
-            //setValue(new LinkedList<>());
+            new Thread(()-> postValue(new LinkedList<>())).start();
+
         }
 
         @Override
         protected void onActive() {
             super.onActive();
 
-            /*new Thread(()->{
+            new Thread(()->{
                 chatListData.postValue(dao.index());
-            }).start();*/
+                reload();
+            }).start();
         }
     }
 
@@ -46,7 +47,7 @@ public class ChatsRepository {
     }
 
     public void add(final Chat chat){
-        //api.add(chat);
+        api.add(chat);
     }
 
     public void delete(final Chat chat){
@@ -54,7 +55,7 @@ public class ChatsRepository {
     }
 
     public void reload(){
-        //api.get();
+        api.get();
     }
 
 }

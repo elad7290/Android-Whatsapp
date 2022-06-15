@@ -2,7 +2,9 @@ package com.example.android_whatsapp.data;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.DeleteTable;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -17,12 +19,19 @@ public interface ChatDao {
     @Query("SELECT * FROM chat WHERE id=:id")
     Chat get(String id);
 
-    @Insert
-    void insert(Chat... chats);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(List<Chat> chats);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Chat chat);
 
     @Update
-    void update(Chat... chats);
+    void update(Chat chat);
 
     @Delete
-    void delete(Chat... chats);
+    void delete(Chat chat);
+
+    @Query("DELETE FROM chat")
+    void clear();
+
 }

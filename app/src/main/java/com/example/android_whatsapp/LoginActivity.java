@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         viewModel.getToken().observe(this, token-> {
             if(token!=null){
                 Intent intent = new Intent(this, SidebarActivity.class);
-                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });

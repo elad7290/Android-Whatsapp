@@ -16,11 +16,11 @@ public class ChatsRepository {
     private ChatListData chatListData;
     private ChatAPI api;
 
-    public ChatsRepository(String token){
+    public ChatsRepository(){
         LocalDB db = LocalDB.getInstance();
         dao = db.chatDao();
         chatListData=new ChatListData();
-        api = new ChatAPI(chatListData, dao,token);
+        api = new ChatAPI(chatListData, dao);
     }
 
     class ChatListData extends MutableLiveData<List<Chat>>{

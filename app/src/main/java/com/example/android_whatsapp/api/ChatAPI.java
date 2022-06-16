@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.android_whatsapp.R;
 import com.example.android_whatsapp.data.AppContext;
 import com.example.android_whatsapp.data.ChatDao;
+import com.example.android_whatsapp.data.Token;
 import com.example.android_whatsapp.entities.Chat;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class ChatAPI {
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
 
-    public ChatAPI(MutableLiveData<List<Chat>> mutableLiveData,ChatDao chatDao, String token)
+    public ChatAPI(MutableLiveData<List<Chat>> mutableLiveData,ChatDao chatDao)
     {
         this.chatListData=mutableLiveData;
         this.dao=chatDao;
@@ -37,7 +38,7 @@ public class ChatAPI {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request newRequest  = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer " + token)
+                        .addHeader("Authorization", "Bearer " + Token.getInstance().getToken())
                         .build();
                 return chain.proceed(newRequest);
             }

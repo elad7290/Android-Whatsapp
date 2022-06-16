@@ -29,7 +29,6 @@ public class SidebarActivity extends AppCompatActivity {
     private ChatsViewModel viewModel;
     private ChatsListAdapter adapter;
     private RecyclerView chatsList;
-    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +36,7 @@ public class SidebarActivity extends AppCompatActivity {
         binding = ActivitySidebarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Intent intent1 = getIntent();
-        token = intent1.getStringExtra("token");
-
         viewModel=new ViewModelProvider(this).get(ChatsViewModel.class);
-        viewModel.setToken(token);
 
         // create chats list
         chatsList = binding.chatsList;
@@ -51,7 +46,6 @@ public class SidebarActivity extends AppCompatActivity {
 
         binding.btnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddNewChatActivity.class);
-            intent.putExtra("token",token);
             startActivity(intent);
         });
 

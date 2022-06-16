@@ -8,12 +8,17 @@ import com.example.android_whatsapp.R;
 import com.example.android_whatsapp.data.AppContext;
 import com.example.android_whatsapp.data.ChatDao;
 import com.example.android_whatsapp.data.MessageDao;
+import com.example.android_whatsapp.data.Token;
 import com.example.android_whatsapp.entities.Chat;
 import com.example.android_whatsapp.entities.Message;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,10 +36,21 @@ public class MessageAPI {
         this.messageListData = mutableLiveData;
         this.dao = messageDao;
 
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request newRequest  = chain.request().newBuilder()
+                        .addHeader("Authorization", "Bearer " + Token.getInstance().getToken())
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        }).build();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(AppContext.context.getString(R.string.BaseUrl))
                 .callbackExecutor(Executors.newSingleThreadExecutor())
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }

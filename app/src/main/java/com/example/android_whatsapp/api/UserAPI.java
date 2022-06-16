@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.android_whatsapp.R;
 import com.example.android_whatsapp.data.AppContext;
+import com.example.android_whatsapp.data.Token;
 import com.example.android_whatsapp.entities.LoginResponse;
 import com.example.android_whatsapp.entities.Message;
 import com.google.gson.GsonBuilder;
@@ -50,6 +51,7 @@ public class UserAPI {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 200) {
                     String answer = response.body().toString();
+                    Token.getInstance().setToken(answer);
                     token.postValue(answer);
                 }
             }

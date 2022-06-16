@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
@@ -20,6 +21,7 @@ public class AddNewChatActivity extends AppCompatActivity {
     private EditText nickname;
     private EditText sever;
     private ChatsViewModel viewModel;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,11 @@ public class AddNewChatActivity extends AppCompatActivity {
         binding = ActivityAddNewChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent intent = getIntent();
+        token = intent.getStringExtra("token");
+
         viewModel=new ViewModelProvider(this).get(ChatsViewModel.class);
+        viewModel.setToken(token);
 
         username=binding.usernane;
         nickname=binding.nickname;
@@ -40,7 +46,6 @@ public class AddNewChatActivity extends AppCompatActivity {
 
             Chat chat =new Chat(u,n,s,null,null);
             viewModel.add(chat);
-
             finish();
         });
 

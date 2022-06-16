@@ -9,13 +9,21 @@ import java.util.List;
 
 public class ChatsViewModel extends ViewModel {
 
-    private final ChatsRepository repository;
-    private final LiveData<List<Chat>> chats;
+    private  ChatsRepository repository;
+    private  LiveData<List<Chat>> chats;
+    private String token;
 
     public ChatsViewModel() {
-        this.repository = new ChatsRepository();
+        //TODO: how to get token in constructor
+    }
+
+
+    public void setToken(String token){
+        this.token=token;
+        this.repository = new ChatsRepository(token);
         chats=repository.getAll();
     }
+
 
     public LiveData<List<Chat>> get() {
         return chats;

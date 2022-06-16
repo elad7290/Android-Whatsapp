@@ -2,16 +2,21 @@ package com.example.android_whatsapp.api;
 
 
 import com.example.android_whatsapp.entities.Chat;
+import com.example.android_whatsapp.entities.LoginResponse;
 import com.example.android_whatsapp.entities.Message;
 
+import java.net.Authenticator;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface WebServiceAPI {
 
@@ -29,5 +34,9 @@ public interface WebServiceAPI {
 
     @POST("contacts/{id}/messages")
     Call<Void> createMessage(@Path("id") String id, @Body Message message);
+
+    @Headers("content-type: application/json")
+    @POST("Login")
+    Call<String> Login(@Query("username") String username, @Query("password") String password);
 
 }

@@ -61,11 +61,13 @@ public class ChatAPI {
         call.enqueue(new Callback<List<Chat>>() {
             @Override
             public void onResponse(@NonNull Call<List<Chat>> call, @NonNull Response<List<Chat>> response) {
-                new Thread(()->{
-                    dao.clear();   // this may fund in the masgot of hani
-                    dao.insert(response.body());
-                    chatListData.postValue(dao.index());  // dao.index()?
-                }).start();
+                if (response.code() == 200) {
+                    new Thread(()->{
+                        dao.clear();   // this may fund in the masgot of hani
+                        dao.insert(response.body());
+                        chatListData.postValue(dao.index());  // dao.index()?
+                    }).start();
+                }
             }
 
             @Override

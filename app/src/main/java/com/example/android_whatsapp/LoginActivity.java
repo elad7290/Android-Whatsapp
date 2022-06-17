@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             if(token!=null){
                 Intent intent = new Intent(this, SidebarActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

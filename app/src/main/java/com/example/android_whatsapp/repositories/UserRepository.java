@@ -1,38 +1,59 @@
 package com.example.android_whatsapp.repositories;
 
+import android.service.autofill.UserData;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.android_whatsapp.api.ChatAPI;
 import com.example.android_whatsapp.api.UserAPI;
 import com.example.android_whatsapp.entities.Chat;
+import com.example.android_whatsapp.entities.User;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class UserRepository {
 
-    private UserData userData;
+    private LoginData loginData;
+    private RegisterData registerData;
     private UserAPI api;
 
     public UserRepository(){
-        userData=new UserData();
-        api=new UserAPI(userData);
+        loginData=new LoginData();
+        registerData = new RegisterData();
+        api=new UserAPI(loginData, registerData);
     }
 
-    class UserData extends MutableLiveData<String> {
+    class LoginData extends MutableLiveData<String> {
 
-        public UserData(){
+        public LoginData(){
             super();
             setValue(null);
         }
     }
 
-    public UserData getUserData() {
-        return userData;
+    class RegisterData extends MutableLiveData<User> {
+
+        public RegisterData(){
+            super();
+            setValue(null);
+        }
     }
 
-    public void login(String username,String password){
+    public LoginData getLoginData() {
+        return loginData;
+    }
+
+    public RegisterData getRegisterData() {
+        return registerData;
+    }
+
+    public void login(String username, String password){
         api.login(username,password);
+    }
+
+    public void register(String username, String nickname, String password){
+        api.register(username,nickname,password);
     }
 
     //TODO: delete for logout maybe???

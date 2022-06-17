@@ -7,10 +7,14 @@ import androidx.room.Dao;
 import com.example.android_whatsapp.R;
 import com.example.android_whatsapp.data.AppContext;
 import com.example.android_whatsapp.data.ChatDao;
+import com.example.android_whatsapp.data.LocalDB;
+import com.example.android_whatsapp.data.LoggedUser;
 import com.example.android_whatsapp.data.MessageDao;
 import com.example.android_whatsapp.data.Token;
 import com.example.android_whatsapp.entities.Chat;
+import com.example.android_whatsapp.entities.Invitation;
 import com.example.android_whatsapp.entities.Message;
+import com.example.android_whatsapp.entities.Transfer;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,8 +41,9 @@ public class MessageAPI {
         this.dao = messageDao;
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+            @NonNull
             @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
+            public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {
                 Request newRequest  = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer " + Token.getInstance().getToken())
                         .build();
@@ -99,10 +104,38 @@ public class MessageAPI {
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                /*int u=0;
-                List<Message> m = dao.index();
+                int u=0;
+                /*List<Message> m = dao.index();
                 dao.insert(message);
                 List<Message> m2 = dao.index();*/
+            }
+        });
+
+        transfer(username, message);
+    }
+
+    private void transfer(String username, @NonNull Message message){
+        // make retrofit to another server
+        Retrofit other_retrofit = new Retrofit.Builder()
+                .baseUrl("http://"+ LocalDB.getInstance().chatDao().get(username).getServer()+"/api/")
+                .callbackExecutor(Executors.newSingleThreadExecutor())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        WebServiceAPI other_webServiceAPI = other_retrofit.create(WebServiceAPI.class);
+
+
+        // invite
+        Call<Void> call = other_webServiceAPI.transfer(new Transfer
+                (LoggedUser.getInstance().getUsername(), username, message.getContent()));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                int i = 0;
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                int i = 0;
             }
         });
     }

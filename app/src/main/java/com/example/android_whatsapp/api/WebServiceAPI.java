@@ -4,6 +4,7 @@ package com.example.android_whatsapp.api;
 import com.example.android_whatsapp.entities.Chat;
 import com.example.android_whatsapp.entities.Invitation;
 import com.example.android_whatsapp.entities.Message;
+import com.example.android_whatsapp.entities.Transfer;
 import com.example.android_whatsapp.entities.User;
 
 import java.util.List;
@@ -48,6 +49,7 @@ public interface WebServiceAPI {
     @POST("invitations")
     Call<Void> invite(@Body Invitation invitation);
 
-
+    @POST("transfer")
+    Call<Void> transfer(@Body Transfer transfer);
 
 }

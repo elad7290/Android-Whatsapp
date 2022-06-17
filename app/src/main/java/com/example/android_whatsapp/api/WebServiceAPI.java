@@ -2,6 +2,7 @@ package com.example.android_whatsapp.api;
 
 
 import com.example.android_whatsapp.entities.Chat;
+import com.example.android_whatsapp.entities.Invitation;
 import com.example.android_whatsapp.entities.Message;
 import com.example.android_whatsapp.entities.User;
 
@@ -11,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -39,5 +41,11 @@ public interface WebServiceAPI {
 
     @POST("Register")
     Call<Void> Register(@Body User user);
+
+    @GET("Users/UserId")
+    Call<String> getUserId(@Header("Authorization") String token);
+
+    @POST("invitations")
+    Call<Void> invite(@Body Invitation invitation);
 
 }

@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.android_whatsapp.R;
 import com.example.android_whatsapp.data.AppContext;
+import com.example.android_whatsapp.data.LoggedUser;
 import com.example.android_whatsapp.data.Token;
+import com.example.android_whatsapp.entities.Invitation;
 import com.example.android_whatsapp.entities.User;
 import com.google.gson.GsonBuilder;
 
@@ -46,7 +48,24 @@ public class UserAPI {
                 if (response.code() == 200) {
                     String answer = response.body().toString();
                     Token.getInstance().setToken(answer);
-                    token.postValue(answer);
+
+                    Call<String> call2 = webServiceAPI.getUserId("Bearer " + Token.getInstance().getToken());
+                    call2.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                            if(response.code() == 200){
+                                String username = response.body();
+                                LoggedUser.getInstance().setUsername(username);
+                                // log in only if succeed
+                                token.postValue(answer);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                            int i = 0;
+                        }
+                    });
                 }
             }
 
@@ -55,6 +74,10 @@ public class UserAPI {
                 int i = 0;
             }
         });
+
+
+
+
     }
 
     public void register(String username, String nickname, String password) {

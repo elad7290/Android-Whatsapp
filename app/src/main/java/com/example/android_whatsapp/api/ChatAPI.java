@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.android_whatsapp.R;
 import com.example.android_whatsapp.data.AppContext;
 import com.example.android_whatsapp.data.ChatDao;
+import com.example.android_whatsapp.data.LoggedUser;
 import com.example.android_whatsapp.data.Token;
 import com.example.android_whatsapp.entities.Chat;
+import com.example.android_whatsapp.entities.Invitation;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,8 +37,9 @@ public class ChatAPI {
         this.dao=chatDao;
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+            @NonNull
             @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
+            public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {
                 Request newRequest  = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer " + Token.getInstance().getToken())
                         .build();
@@ -80,15 +83,31 @@ public class ChatAPI {
 
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                new Thread(()->{
-                    dao.insert(chat);
-                    chatListData.postValue(dao.index());
-                }).start();
+                if (response.code() == 201){
+                    new Thread(()->{
+                        dao.insert(chat);
+                        chatListData.postValue(dao.index());
+                    }).start();
+                }
             }
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 int u=0;
+            }
+        });
+
+        Call<Void> call2 = webServiceAPI.invite(new Invitation
+                (LoggedUser.getInstance().getUsername(), chat.getId(), chat.getServer()));
+        call2.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                int i = 0;
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                int i = 0;
             }
         });
     }

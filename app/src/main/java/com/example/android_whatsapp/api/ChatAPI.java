@@ -77,6 +77,8 @@ public class ChatAPI {
     }
 
     public void add(Chat chat) {
+
+        // add to our server
         Call<Void> call = webServiceAPI.createChat(chat);
 
         call.enqueue(new Callback<Void>() {
@@ -97,9 +99,26 @@ public class ChatAPI {
             }
         });
 
-        Call<Void> call2 = webServiceAPI.invite(new Invitation
-                (LoggedUser.getInstance().getUsername(), chat.getId(), chat.getServer()));
-        call2.enqueue(new Callback<Void>() {
+
+        // invite other server
+        invite(chat);
+
+    }
+
+    private void invite(@NonNull Chat chat){
+        // make retrofit to another server
+        Retrofit other_retrofit = new Retrofit.Builder()
+                .baseUrl("http://"+chat.getServer()+"/api/")
+                .callbackExecutor(Executors.newSingleThreadExecutor())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        WebServiceAPI other_webServiceAPI = other_retrofit.create(WebServiceAPI.class);
+
+
+        // invite
+        Call<Void> call = other_webServiceAPI.invite(new Invitation
+                (LoggedUser.getInstance().getUsername(), chat.getId(), AppContext.context.getString(R.string.BaseUrl)));
+        call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 int i = 0;

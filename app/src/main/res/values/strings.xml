@@ -14,8 +14,13 @@
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="send_message_btn">send message btn</string>
-<!--
+    <!--
     <string name="BaseUrl">http://172.19.3.62:7097/api/</string>
 -->
     <string name="BaseUrl">http://10.0.2.2:7097/api/</string>
+    <string name="server">Server</string>
+    <string name="new_server">New Server</string>
+    <string name="save">SAVE</string>
+    <string name="settings">Settings</string>
+    <string name="add_chat">Add a friend!</string>
 </resources>

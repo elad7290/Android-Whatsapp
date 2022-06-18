@@ -30,7 +30,7 @@ public class AddNewChatActivity extends AppCompatActivity {
 
         viewModel=new ViewModelProvider(this).get(ChatsViewModel.class);
 
-        username=binding.usernane;
+        username=binding.username;
         nickname=binding.nickname;
         sever=binding.server;
 

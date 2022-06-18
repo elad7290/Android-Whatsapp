@@ -6,4 +6,5 @@
     <color name="colorRed">#C11515</color>
     <color name="lightGray">#e6e6e6</color>
     <color name="senderColor">#dcf8c6</color>
+    <color name="addChatBtn">#D40074</color>
 </resources>

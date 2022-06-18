@@ -8,20 +8,11 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 
 import com.example.android_whatsapp.adapters.ChatsListAdapter;
-import com.example.android_whatsapp.api.ChatAPI;
-import com.example.android_whatsapp.data.AndroidWhatsappDB;
-import com.example.android_whatsapp.data.ChatDao;
 import com.example.android_whatsapp.databinding.ActivitySidebarBinding;
-import com.example.android_whatsapp.entities.Chat;
 import com.example.android_whatsapp.viewmodels.ChatsViewModel;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 public class SidebarActivity extends AppCompatActivity {
 

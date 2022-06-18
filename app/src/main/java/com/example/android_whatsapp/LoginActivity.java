@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.android_whatsapp.databinding.ActivityLoginBinding;
 import com.example.android_whatsapp.viewmodels.MessagesViewModel;

@@ -1,5 +1,10 @@
 package com.example.android_whatsapp.api;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -9,6 +14,7 @@ import com.example.android_whatsapp.data.LoggedUser;
 import com.example.android_whatsapp.data.Token;
 import com.example.android_whatsapp.entities.Invitation;
 import com.example.android_whatsapp.entities.User;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.Executors;
@@ -46,7 +52,7 @@ public class UserAPI {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.code() == 200) {
-                    String answer = response.body().toString();
+                    String answer = response.body();
                     Token.getInstance().setToken(answer);
 
                     Call<String> call2 = webServiceAPI.getUserId("Bearer " + Token.getInstance().getToken());
@@ -74,9 +80,6 @@ public class UserAPI {
                 int i = 0;
             }
         });
-
-
-
 
     }
 

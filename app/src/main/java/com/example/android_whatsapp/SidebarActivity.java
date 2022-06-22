@@ -40,6 +40,11 @@ public class SidebarActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        binding.settings.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        });
+
         viewModel.get().observe(this,chats -> adapter.setChats(chats));
 
     }

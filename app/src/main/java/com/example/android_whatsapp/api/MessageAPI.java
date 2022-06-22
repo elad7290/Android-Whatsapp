@@ -2,17 +2,14 @@ package com.example.android_whatsapp.api;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Dao;
 
 import com.example.android_whatsapp.R;
 import com.example.android_whatsapp.data.AppContext;
-import com.example.android_whatsapp.data.ChatDao;
 import com.example.android_whatsapp.data.LocalDB;
 import com.example.android_whatsapp.data.LoggedUser;
 import com.example.android_whatsapp.data.MessageDao;
+import com.example.android_whatsapp.data.Server;
 import com.example.android_whatsapp.data.Token;
-import com.example.android_whatsapp.entities.Chat;
-import com.example.android_whatsapp.entities.Invitation;
 import com.example.android_whatsapp.entities.Message;
 import com.example.android_whatsapp.entities.Transfer;
 
@@ -33,6 +30,7 @@ public class MessageAPI {
 
     private MutableLiveData<List<Message>> messageListData;
     private MessageDao dao;
+    private OkHttpClient client;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
 
@@ -40,7 +38,7 @@ public class MessageAPI {
         this.messageListData = mutableLiveData;
         this.dao = messageDao;
 
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+        client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
             @NonNull
             @Override
             public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {
@@ -50,9 +48,8 @@ public class MessageAPI {
                 return chain.proceed(newRequest);
             }
         }).build();
-
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppContext.context.getString(R.string.BaseUrl))
+                .baseUrl(Server.getAddress())
                 .callbackExecutor(Executors.newSingleThreadExecutor())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
@@ -60,7 +57,20 @@ public class MessageAPI {
         webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
 
+    private void validRetrofit(){
+        retrofit = retrofit.newBuilder()
+                .baseUrl(Server.getAddress())
+                .callbackExecutor(Executors.newSingleThreadExecutor())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+        webServiceAPI = retrofit.create(WebServiceAPI.class);
+
+    }
+
     public void get(String username) {
+        validRetrofit();
+
         Call<List<Message>> call = webServiceAPI.getMessages(username);
 
         call.enqueue(new Callback<List<Message>>() {
@@ -92,6 +102,8 @@ public class MessageAPI {
     }
 
     public void add(String username, Message message) {
+        validRetrofit();
+
         Call<Void> call = webServiceAPI.createMessage(username, message);
 
         call.enqueue(new Callback<Void>() {
@@ -109,9 +121,6 @@ public class MessageAPI {
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 int u=0;
-                /*List<Message> m = dao.index();
-                dao.insert(message);
-                List<Message> m2 = dao.index();*/
             }
         });
 

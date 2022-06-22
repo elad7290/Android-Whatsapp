@@ -1,20 +1,14 @@
 package com.example.android_whatsapp.api;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.view.View;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.android_whatsapp.R;
 import com.example.android_whatsapp.data.AppContext;
 import com.example.android_whatsapp.data.LoggedUser;
+import com.example.android_whatsapp.data.Server;
 import com.example.android_whatsapp.data.Token;
-import com.example.android_whatsapp.entities.Invitation;
 import com.example.android_whatsapp.entities.User;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.Executors;
@@ -37,7 +31,16 @@ public class UserAPI {
         this.token = token;
         this.user = user;
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppContext.context.getString(R.string.BaseUrl))
+                .baseUrl(Server.getAddress())
+                .callbackExecutor(Executors.newSingleThreadExecutor())
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
+                .build();
+        webServiceAPI = retrofit.create(WebServiceAPI.class);
+    }
+
+    private void validRetrofit(){
+        retrofit = retrofit.newBuilder()
+                .baseUrl(Server.getAddress())
                 .callbackExecutor(Executors.newSingleThreadExecutor())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .build();
@@ -45,6 +48,7 @@ public class UserAPI {
     }
 
     public void login(String username, String password) {
+        validRetrofit();
 
         Call<String> call = webServiceAPI.Login(username, password);
 
@@ -84,6 +88,7 @@ public class UserAPI {
     }
 
     public void register(String username, String nickname, String password) {
+        validRetrofit();
 
         Call<Void> call = webServiceAPI.Register(new User(username, nickname, password));
 

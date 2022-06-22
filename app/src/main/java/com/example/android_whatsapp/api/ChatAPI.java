@@ -7,6 +7,7 @@ import com.example.android_whatsapp.R;
 import com.example.android_whatsapp.data.AppContext;
 import com.example.android_whatsapp.data.ChatDao;
 import com.example.android_whatsapp.data.LoggedUser;
+import com.example.android_whatsapp.data.Server;
 import com.example.android_whatsapp.data.Token;
 import com.example.android_whatsapp.entities.Chat;
 import com.example.android_whatsapp.entities.Invitation;
@@ -28,6 +29,7 @@ public class ChatAPI {
 
     private MutableLiveData<List<Chat>> chatListData;
     private ChatDao dao;
+    private OkHttpClient client;
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
 
@@ -36,7 +38,7 @@ public class ChatAPI {
         this.chatListData=mutableLiveData;
         this.dao=chatDao;
 
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+        client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
             @NonNull
             @Override
             public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {
@@ -46,9 +48,18 @@ public class ChatAPI {
                 return chain.proceed(newRequest);
             }
         }).build();
-
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppContext.context.getString(R.string.BaseUrl))
+                .baseUrl(Server.getAddress())
+                .callbackExecutor(Executors.newSingleThreadExecutor())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+        webServiceAPI = retrofit.create(WebServiceAPI.class);
+    }
+
+    private void validRetrofit(){
+        retrofit = retrofit.newBuilder()
+                .baseUrl(Server.getAddress())
                 .callbackExecutor(Executors.newSingleThreadExecutor())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
@@ -57,6 +68,8 @@ public class ChatAPI {
     }
 
     public void get() {
+        validRetrofit();
+
         Call<List<Chat>> call = webServiceAPI.getChats();
         call.enqueue(new Callback<List<Chat>>() {
             @Override
@@ -79,6 +92,7 @@ public class ChatAPI {
     }
 
     public void add(Chat chat) {
+        validRetrofit();
 
         // add to our server
         Call<Void> call = webServiceAPI.createChat(chat);
@@ -119,7 +133,7 @@ public class ChatAPI {
 
         // invite
         Call<Void> call = other_webServiceAPI.invite(new Invitation
-                (LoggedUser.getInstance().getUsername(), chat.getId(), AppContext.context.getString(R.string.BaseUrl)));
+                (LoggedUser.getInstance().getUsername(), chat.getId(), Server.getAddress()));
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {

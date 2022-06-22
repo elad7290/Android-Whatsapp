@@ -102,6 +102,39 @@ public class MessageAPI {
     }
 
     public void add(String username, Message message) {
+        // transfer and if succeed, add
+        transfer(username, message);
+    }
+
+    private void transfer(String username, @NonNull Message message){
+        // make retrofit to another server
+        Retrofit other_retrofit = new Retrofit.Builder()
+                .baseUrl("http://"+ LocalDB.getInstance().chatDao().get(username).getServer()+"/api/")
+                .callbackExecutor(Executors.newSingleThreadExecutor())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        WebServiceAPI other_webServiceAPI = other_retrofit.create(WebServiceAPI.class);
+
+
+        // transfer
+        Call<Void> call = other_webServiceAPI.transfer(new Transfer
+                (LoggedUser.getInstance().getUsername(), username, message.getContent()));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code() == 201){
+                    addChat(username, message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                int i = 0;
+            }
+        });
+    }
+
+    private void addChat(String username, Message message){
         validRetrofit();
 
         Call<Void> call = webServiceAPI.createMessage(username, message);
@@ -121,34 +154,6 @@ public class MessageAPI {
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 int u=0;
-            }
-        });
-
-        transfer(username, message);
-    }
-
-    private void transfer(String username, @NonNull Message message){
-        // make retrofit to another server
-        Retrofit other_retrofit = new Retrofit.Builder()
-                .baseUrl("http://"+ LocalDB.getInstance().chatDao().get(username).getServer()+"/api/")
-                .callbackExecutor(Executors.newSingleThreadExecutor())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        WebServiceAPI other_webServiceAPI = other_retrofit.create(WebServiceAPI.class);
-
-
-        // invite
-        Call<Void> call = other_webServiceAPI.transfer(new Transfer
-                (LoggedUser.getInstance().getUsername(), username, message.getContent()));
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                int i = 0;
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                int i = 0;
             }
         });
     }

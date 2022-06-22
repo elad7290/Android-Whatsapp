@@ -92,6 +92,38 @@ public class ChatAPI {
     }
 
     public void add(Chat chat) {
+        // invite and if succeed, add
+        invite(chat);
+    }
+
+    private void invite(@NonNull Chat chat){
+        // make retrofit to another server
+        Retrofit other_retrofit = new Retrofit.Builder()
+                .baseUrl("http://"+chat.getServer()+"/api/")
+                .callbackExecutor(Executors.newSingleThreadExecutor())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        WebServiceAPI other_webServiceAPI = other_retrofit.create(WebServiceAPI.class);
+
+
+        Call<Void> other_call = other_webServiceAPI.invite(new Invitation
+                (LoggedUser.getInstance().getUsername(), chat.getId(), Server.getAddress()));
+        other_call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.code()==201){
+                    addChat(chat);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                int i = 0;
+            }
+        });
+    }
+
+    private void addChat(Chat chat){
         validRetrofit();
 
         // add to our server
@@ -114,36 +146,7 @@ public class ChatAPI {
                 int u=0;
             }
         });
-
-
-        // invite other server
-        invite(chat);
-
     }
 
-    private void invite(@NonNull Chat chat){
-        // make retrofit to another server
-        Retrofit other_retrofit = new Retrofit.Builder()
-                .baseUrl("http://"+chat.getServer()+"/api/")
-                .callbackExecutor(Executors.newSingleThreadExecutor())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        WebServiceAPI other_webServiceAPI = other_retrofit.create(WebServiceAPI.class);
 
-
-        // invite
-        Call<Void> call = other_webServiceAPI.invite(new Invitation
-                (LoggedUser.getInstance().getUsername(), chat.getId(), Server.getAddress()));
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
-                int i = 0;
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                int i = 0;
-            }
-        });
-    }
 }

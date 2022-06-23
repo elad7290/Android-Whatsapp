@@ -98,6 +98,7 @@ public class ChatAPI {
 
     private void invite(@NonNull Chat chat){
         // make retrofit to another server
+        String base = "http://"+chat.getServer()+"/api/";
         Retrofit other_retrofit = new Retrofit.Builder()
                 .baseUrl("http://"+chat.getServer()+"/api/")
                 .callbackExecutor(Executors.newSingleThreadExecutor())
@@ -107,7 +108,7 @@ public class ChatAPI {
 
 
         Call<Void> other_call = other_webServiceAPI.invite(new Invitation
-                (LoggedUser.getInstance().getUsername(), chat.getId(), Server.getAddress()));
+                (LoggedUser.getInstance().getUsername(), chat.getId(), Server.getServer()));
         other_call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {

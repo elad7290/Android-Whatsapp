@@ -9,6 +9,6 @@ First, be sure you run the api. Click run and enjoy our app!
 ### Server address :
 
 To change server's address in the Android project, there is a file named "Server.java" (in 'data' folder).
-You can change the addresses there conveniently.
+You can change the address there conveniently.
 to connect university's server use the address: 10.0.2.2:8888,
 to connect our api's server use the address: 10.0.2.2:7097.

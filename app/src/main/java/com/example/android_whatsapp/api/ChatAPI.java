@@ -98,7 +98,6 @@ public class ChatAPI {
 
     private void invite(@NonNull Chat chat){
         // make retrofit to another server
-        String base = "http://"+chat.getServer()+"/api/";
         Retrofit other_retrofit = new Retrofit.Builder()
                 .baseUrl("http://"+chat.getServer()+"/api/")
                 .callbackExecutor(Executors.newSingleThreadExecutor())

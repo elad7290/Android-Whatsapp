@@ -107,8 +107,6 @@ public class MessageAPI {
     }
 
     private void transfer(String username, @NonNull Message message){
-        // make retrofit to another server
-        String base = "http://"+ LocalDB.getInstance().chatDao().get(username).getServer()+"/api/";
         Retrofit other_retrofit = new Retrofit.Builder()
                 .baseUrl("http://"+ LocalDB.getInstance().chatDao().get(username).getServer()+"/api/")
                 .callbackExecutor(Executors.newSingleThreadExecutor())
